@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 const App = () => {
   const hello = <p>Hello React!</p>
