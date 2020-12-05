@@ -46,7 +46,7 @@ class EventsNew extends Component<Props & InjectedFormProps<{}, Props>> {
   }
 
   render() {
-    const { handleSubmit } = this.props
+    const { handleSubmit, pristine, submitting } = this.props
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -65,7 +65,11 @@ class EventsNew extends Component<Props & InjectedFormProps<{}, Props>> {
           />
         </div>
         <div>
-          <input type="submit" value="Submit" disabled={false} />
+          <input
+            type="submit"
+            value="Submit"
+            disabled={pristine || submitting}
+          />
           <Link to="/">Cancel</Link>
         </div>
       </form>
