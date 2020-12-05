@@ -1,12 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { increment, decrement } from '../actions'
-
-interface Props {
-  value: number
-  increment: typeof increment
-  decrement: typeof decrement
-}
 
 const User = (props: { name?: string; age?: number }) => {
   return (
@@ -21,7 +13,7 @@ User.defaultProps = {
   age: '0',
 }
 
-class App extends Component<Props> {
+class App extends Component {
   hello = (<p>Hello React!</p>)
   input = (
     <input
@@ -38,23 +30,12 @@ class App extends Component<Props> {
       <React.Fragment>
         {this.hello}
         {this.input}
-        {this.profiles.map((profile) => {
-          return <User name={profile.name} age={profile.age} />
+        {this.profiles.map((profile, i) => {
+          return <User key={i} name={profile.name} age={profile.age} />
         })}
-        <div>value: {this.props.value}</div>
-        <button onClick={this.props.increment}>増やす</button>
-        <button onClick={this.props.decrement}>減らす</button>
       </React.Fragment>
     )
   }
 }
 
-const mapStateToProps = (state: { count: { value: any } }) => ({
-  value: state.count.value,
-})
-const mapDispatchToProps = {
-  increment,
-  decrement,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default App
