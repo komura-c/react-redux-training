@@ -10,6 +10,7 @@ import './index.css'
 import reducer from 'reducers'
 import EventsIndex from './components/events/EventsIndex'
 import EventsNew from './components/events/EventsNew'
+import EventsShow from './components/events/EventsShow'
 import App from './components/App'
 import reportWebVitals from './reportWebVitals'
 
@@ -26,7 +27,9 @@ ReactDOM.render(
         <App />
         <Switch>
           <Route exact path="/events/new" component={EventsNew} />
+          <Route path="/events/:id" component={EventsShow} />
           <Route exact path="/" component={EventsIndex} />
+          <Route exact path="/events" component={EventsIndex} />
         </Switch>
       </BrowserRouter>
     </Provider>
