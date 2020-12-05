@@ -10,7 +10,7 @@ import EventsIndex from './components/events/EventsIndex'
 import EventsNew from './components/events/EventsNew'
 import App from './components/App'
 import reportWebVitals from './reportWebVitals'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 const store = createStore(reducer, applyMiddleware(thunk))
 
@@ -19,10 +19,10 @@ ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter>
         <App />
-        <switch>
+        <Switch>
           <Route exact path="/events/new" component={EventsNew} />
           <Route exact path="/" component={EventsIndex} />
-        </switch>
+        </Switch>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
