@@ -21,7 +21,7 @@ export default function readEvents(
       return _.mapKeys(action.response.data, 'id')
     case DELETE_EVENT:
       delete events[action.id]
-      return { ...events }
+      return events.filter((el: string) => el !== action.id)
     default:
       return events
   }
