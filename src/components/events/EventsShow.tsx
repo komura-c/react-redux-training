@@ -6,9 +6,11 @@ import {
   reduxForm,
   WrappedFieldProps,
 } from 'redux-form'
-import { Link } from 'react-router-dom'
 
 import { deleteEvent, getEvent, putEvent } from '../../actions'
+
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 
 interface Props {
   getEvent: any
@@ -44,10 +46,13 @@ class EventsShow extends Component<Props & InjectedFormProps<{}, Props>> {
     } = field
 
     return (
-      <div>
-        <input {...input} placeholder={label} type={type} />
-        {touched && error && <span>{error}</span>}
-      </div>
+      <TextField
+        {...input}
+        placeholder={label}
+        type={type}
+        error={touched && error}
+        helperText={error}
+      />
     )
   }
 
@@ -82,15 +87,25 @@ class EventsShow extends Component<Props & InjectedFormProps<{}, Props>> {
           />
         </div>
         <div>
-          <input
+          <Button
+            variant="contained"
+            color="primary"
             type="submit"
-            value="Submit"
             disabled={pristine || submitting || invalid}
-          />
-          <Link to="/">Cancel</Link>
-          <Link to="/" onClick={this.onDeleteClick}>
-            Delete
-          </Link>
+          >
+            投稿
+          </Button>
+          <Button variant="contained" href="/">
+            キャンセル
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            href="/"
+            onClick={this.onDeleteClick}
+          >
+            削除
+          </Button>
         </div>
       </form>
     )
