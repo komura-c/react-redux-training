@@ -8,9 +8,10 @@ import {
 } from 'redux-form'
 import { Link } from 'react-router-dom'
 
-import { deleteEvent } from '../../actions'
+import { deleteEvent, getEvent } from '../../actions'
 
 interface Props {
+  getEvent: any
   postEvent: any
   deleteEvent: any
   match: { params: { id: string } }
@@ -26,6 +27,11 @@ class EventsShow extends Component<Props & InjectedFormProps<{}, Props>> {
     super(props)
     this.onSubmit = this.onSubmit.bind(this)
     this.onDeleteClick = this.onDeleteClick.bind(this)
+  }
+
+  componentDidMount() {
+    const { id } = this.props.match.params
+    if (id) this.props.getEvent(id)
   }
 
   renderField(field: { label: string; type: string } & WrappedFieldProps) {
@@ -101,13 +107,26 @@ const validate = (values: { title: any; body: any }) => {
   return errors
 }
 
+const mapStateToProps = (
+  state: { events: { [x: string]: any } },
+  ownProps: { match: { params: { id: string | number } } },
+) => {
+  const event = state.events[ownProps.match.params.id]
+  return { initialValues: event, state }
+}
+
 const mapDispatchToProps = {
   deleteEvent,
+  getEvent,
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(
-  reduxForm<{}, Props>({ validate, form: 'eventShowForm' })(EventsShow),
+  reduxForm<{}, Props>({
+    validate,
+    form: 'eventShowForm',
+    enableReinitialize: true,
+  })(EventsShow),
 )
