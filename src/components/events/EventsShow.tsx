@@ -8,11 +8,12 @@ import {
 } from 'redux-form'
 import { Link } from 'react-router-dom'
 
-import { deleteEvent, getEvent } from '../../actions'
+import { deleteEvent, getEvent, putEvent } from '../../actions'
 
 interface Props {
   getEvent: any
   postEvent: any
+  putEvent: any
   deleteEvent: any
   match: { params: { id: string } }
   history: string[]
@@ -57,12 +58,12 @@ class EventsShow extends Component<Props & InjectedFormProps<{}, Props>> {
   }
 
   async onSubmit(values: any) {
-    await this.props.postEvent(values)
+    await this.props.putEvent(values)
     this.props.history.push('/')
   }
 
   render() {
-    const { handleSubmit, pristine, submitting } = this.props
+    const { handleSubmit, pristine, submitting, invalid } = this.props
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -84,7 +85,7 @@ class EventsShow extends Component<Props & InjectedFormProps<{}, Props>> {
           <input
             type="submit"
             value="Submit"
-            disabled={pristine || submitting}
+            disabled={pristine || submitting || invalid}
           />
           <Link to="/">Cancel</Link>
           <Link to="/" onClick={this.onDeleteClick}>
@@ -118,6 +119,7 @@ const mapStateToProps = (
 const mapDispatchToProps = {
   deleteEvent,
   getEvent,
+  putEvent,
 }
 
 export default connect(
